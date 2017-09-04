@@ -1,8 +1,23 @@
 def caesar_cipher(text, number)
-  #split string into separate characters
-  #keep the spaces and punctuation somehow: how about if an element in the list is a letter, do something to it, otherwise ignore
-  #convert letters into ascii codes using .ord
-  #keeping the same case: is there a way of checking if a letter is upcase? => using a regex would be good
+  characters = text.split("")
+  characters.map! do |character|
+    if character =~ /[a-z]/
+      new_ascii = character.ord + number
+      if new_ascii > 122
+        new_ascii -= 26
+      end
+      character = new_ascii.chr
+    elsif character =~ /[A-Z]/
+      new_ascii = character.ord + number
+      if new_ascii > 90
+        new_ascii -= 26
+      end
+      character = new_ascii.chr
+    else
+      character = character
+    end
+  end
+  return characters.join
 end
 
-caesar_cipher("What a string!", 5)
+puts caesar_cipher("What a string!", 5)
